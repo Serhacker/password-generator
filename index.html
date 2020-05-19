@@ -1,0 +1,111 @@
+<html lang="es">
+<head>
+</head>
+<body>
+    <select id="selectType">
+        <option value="0" disabled selected>Tipo de caracteres</option>
+        <option value="numeros">Sólo números</option>
+        <option value="letras">Sólo letras</option>
+        <option value="todos">Con caracteres especiales</option>
+    </select>
+    <select id="selectCharacter">
+        <option value="0" disabled selected>Número de caracteres</option>
+        <option value="4">4</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+    </select>
+
+    <a href="#" id="boton">click</a>
+    <input type="text" id="pw">
+</body>
+<footer>
+    <script>
+        const arrNum = ["0","1","2","3","4","5","6","7","8","9"];
+        const arrText = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+        const arrAll = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z","!","”","#","$","%","&","'","(",")","*","+",",","-",".","/",":",";","<","=",">","?","@","[","]","^","_","`","{","|","}","~"];
+        let arrOpt = [];
+        let result = [];
+        let min = 0;
+
+        function number() {
+            let max = arrNum.length;
+            let randomNumber = Math.floor(Math.random() * (max - min)) + min;
+            result.push(arrNum[randomNumber]);
+        }
+
+        function text() {
+            let max = arrText.length;
+            let randomNumber = Math.floor(Math.random() * (max - min)) + min;
+            result.push(arrText[randomNumber]);
+        }
+
+        function all() {
+            let max = arrAll.length;
+            let randomNumber = Math.floor(Math.random() * (max - min)) + min;
+            result.push(arrAll[randomNumber]);
+        }
+
+        let selectType = document.getElementById('selectType');
+        selectType.addEventListener('change',function (){
+            let selectedOption = this.options[selectType.selectedIndex];
+            let x = selectedOption.value;
+            arrOpt.push(x);
+        });
+
+        let selectCharacter = document.getElementById('selectCharacter');
+        selectCharacter.addEventListener('change',function (){
+            let selectedOption2 = this.options[selectCharacter.selectedIndex];
+            let y = selectedOption2.value;
+            arrOpt.push(y);
+        });
+
+        let boton = document.getElementById('boton');
+
+        boton.addEventListener('click',function(){
+            if (arrOpt.length<2) {
+                alert("Seleccione tanto el tipo como la longitud de la contraseña");
+
+            } else {
+                let elect1 = arrOpt[0];
+                 let elect2 = arrOpt[1];
+
+                 if (elect1==="numeros") {
+                     for (let i = 0; i<elect2; i++) {
+                        number();
+                    }
+
+                } else if (elect1==="letras") {
+                    for (let i = 0; i<elect2; i++) {
+                        text();
+                    }   
+                } else if (elect1==="todos") {
+                    for (let i = 0; i<elect2; i++) {
+                        all();
+                    }   
+                } else {
+                    console.log("error");
+                }
+
+                let r = result.join("");
+                console.log(r);
+
+                document.getElementById('pw').value = r;
+
+                arrOpt = [];
+                result = [];
+                r = "";
+                document.getElementById("selectType").selectedIndex = "0";
+                document.getElementById("selectCharacter").selectedIndex = "0";
+
+            }
+
+
+        });
+
+
+    </script>
+</footer>
+</html>
